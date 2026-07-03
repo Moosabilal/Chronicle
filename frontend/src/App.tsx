@@ -5,6 +5,8 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { CreatePostPage } from './pages/CreatePostPage'
 import { ViewPostPage } from './pages/ViewPostPage'
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
+import { ResetPasswordPage } from './pages/ResetPasswordPage'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/write" element={<CreatePostPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

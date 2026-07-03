@@ -30,4 +30,21 @@ export class AuthService {
       throw new Error(error.response?.data?.message ?? 'Login failed. Please check your credentials.')
     }
   }
+  static async forgotPassword(email: string): Promise<string> {
+    try {
+      const res = await api.post('/auth/forgot-password', { email })
+      return res.data.message
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message ?? 'Failed to send reset email.')
+    }
+  }
+
+  static async resetPassword(token: string, password: string): Promise<string> {
+    try {
+      const res = await api.put(`/auth/reset-password/${token}`, { password })
+      return res.data.message
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message ?? 'Failed to reset password.')
+    }
+  }
 }

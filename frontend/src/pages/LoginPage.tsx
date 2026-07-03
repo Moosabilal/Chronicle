@@ -58,6 +58,9 @@ export function LoginPage() {
         <form id="login-form" onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
           <FloatingInput id="login-email" name="email" type="email" label="Email address" value={form.email} onChange={handleChange} icon={<Mail size={16} />} required />
           <PasswordInput id="login-password" name="password" label="Password" value={form.password} onChange={handleChange} show={showPass} onToggle={() => setShowPass((v) => !v)} icon={<Lock size={16} />} />
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-0.5rem' }}>
+            <Link to="/forgot-password" style={{ fontSize: '0.8rem', color: 'var(--stone-500)', textDecoration: 'none' }}>Forgot password?</Link>
+          </div>
           <button id="btn-login-submit" type="submit" disabled={loading}
             style={{ marginTop: '0.5rem', padding: '0.9rem', borderRadius: '12px', border: 'none', background: loading ? 'rgba(28,25,23,0.5)' : 'var(--ink-900)', color: '#fff', fontSize: '0.95rem', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}>
             {loading ? 'Signing in…' : 'Sign in'}
