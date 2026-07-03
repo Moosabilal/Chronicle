@@ -90,7 +90,7 @@ export class AuthService implements IAuthService {
 
     try {
       await resend.emails.send({
-        from: 'Acme <onboarding@resend.dev>', // Free test tier requires this domain
+        from: 'Chronicle <noreply@chronicle.moosadev.online>',
         to: user.email,
         subject: 'Chronicle: Password Reset Request',
         html: `<p>You requested a password reset. Click the link below to reset your password (valid for 10 minutes):</p>
