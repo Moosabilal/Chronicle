@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ===========================
+   Chronicle — Global Tokens
+   =========================== */
+:root {
+  --cream-50:  #FDFCFA;
+  --cream-100: #F9F8F6;
+  --cream-200: #F0EDE9;
+  --cream-300: #E4DFD8;
+  --stone-500: #8C8278;
+  --stone-700: #5C5550;
+  --ink-900:   #1C1917;
+
+  --glass-bg:     rgba(249, 248, 246, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.35);
+  --glass-shadow: 0 8px 32px rgba(92, 85, 80, 0.08);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+/* ===========================
+   Reset & Base
+   =========================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--cream-100);
+  color: var(--ink-900);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   Scrollbar
+   =========================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream-200);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cream-300);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--stone-500);
+}
+
+/* ===========================
+   Glassmorphism Utility
+   =========================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+  background: rgba(249, 248, 246, 0.75);
+  backdrop-filter: blur(28px) saturate(1.6);
+  -webkit-backdrop-filter: blur(28px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 16px 48px rgba(92, 85, 80, 0.12);
+}
+
+/* ===========================
+   Typography
+   =========================== */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink-900);
+  letter-spacing: -0.02em;
+}
+
+/* ===========================
+   Focus
+   =========================== */
+:focus-visible {
+  outline: 2px solid var(--stone-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ===========================
+   Reduced motion
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
