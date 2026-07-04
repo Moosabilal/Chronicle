@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { PenSquare, BookOpen, LogIn, LogOut, Menu, X, UserPlus } from 'lucide-react'
+import { PenSquare, BookOpen, LogIn, LogOut, Menu, X, UserPlus, User } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Scene } from '../components/canvas/Scene'
 import { useAuthStore } from '../store/useAuthStore'
@@ -76,6 +76,7 @@ function Navbar() {
             <>
               <NavItem to="/" label="Read" />
               <NavItem to="/write" label="Write" icon={<PenSquare size={14} strokeWidth={2} />} />
+              <NavItem to="/profile" label="Profile" icon={<User size={14} strokeWidth={2} />} />
               <li>
                 <div
                   style={{
@@ -162,6 +163,7 @@ function Navbar() {
           {isAuthenticated ? (
             <>
               <MobileNavItem to="/write" label="Write" />
+              <MobileNavItem to="/profile" label="Profile" />
               <button
                 id="btn-logout-mobile"
                 onClick={handleLogout}

@@ -129,4 +129,15 @@ export class AuthService implements IAuthService {
 
     return true;
   }
+
+  async updateProfile(userId: string, data: { name?: string; avatar?: string }): Promise<Partial<IUser>> {
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new AppError('User not found', 404);
+
+    const updatedUser = await this.userRepository.update(userId, data);
+    const userResponse = updatedUser!.toObject();
+    delete userResponse.password;
+
+    return userResponse;
+  }
 }

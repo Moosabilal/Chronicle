@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ImageIcon, Tag, Type, FileText, AlignLeft, AlertCircle, CheckCircle, Upload, X } from 'lucide-react'
 import gsap from 'gsap'
 import { BlogService } from '../services/BlogService'
@@ -8,6 +8,7 @@ import { useAuthStore } from '../store/useAuthStore'
 
 export function CreatePostPage() {
   const navigate        = useNavigate()
+  const { slug }        = useParams<{ slug: string }>()
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
 
   const [form, setForm] = useState({ title: '', excerpt: '', content: '', tags: '' })
@@ -25,7 +26,19 @@ export function CreatePostPage() {
     if (!isAuthenticated) { navigate('/login'); return }
     if (!containerRef.current) return
     gsap.fromTo(containerRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
-  }, [isAuthenticated, navigate])
+
+    if (slug) {
+      BlogService.getBlogBySlug(slug)
+        .then(blog => {
+          setForm({ title: blog.title, excerpt: blog.excerpt || '', content: blog.content, tags: blog.tags.join(', ') })
+          if (blog.coverImage) {
+            setCoverImage(blog.coverImage)
+            setImagePreview(blog.coverImage)
+          }
+        })
+        .catch(() => setError('Failed to load story for editing.'))
+    }
+  }, [isAuthenticated, navigate, slug])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
@@ -77,14 +90,19 @@ export function CreatePostPage() {
     setLoading(true); setError('')
     try {
       const tags = form.tags.split(',').map((t) => t.trim()).filter(Boolean)
-      const blog = await BlogService.createBlog({
+      const data = {
         title:      form.title,
         content:    form.content,
         excerpt:    form.excerpt || undefined,
         coverImage: coverImage  || undefined,
         tags,
-      })
-      setSuccess('Post published!')
+      }
+      
+      const blog = slug 
+        ? await BlogService.updateBlog(slug, data)
+        : await BlogService.createBlog(data)
+
+      setSuccess(slug ? 'Post updated!' : 'Post published!')
       setTimeout(() => navigate(`/post/${blog.slug}`), 800)
     } catch (err: any) {
       setError(err.message)
@@ -113,8 +131,8 @@ export function CreatePostPage() {
     <section style={{ maxWidth: '780px', margin: '0 auto', padding: '3rem 1.5rem 6rem' }}>
       <div ref={containerRef} style={{ opacity: 0 }}>
         <header style={{ marginBottom: '2.5rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 700, color: 'var(--ink-900)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>New Story</h1>
-          <p style={{ color: 'var(--stone-500)', marginTop: '0.5rem', fontSize: '0.95rem' }}>Write something worth reading.</p>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 700, color: 'var(--ink-900)', letterSpacing: '-0.04em', lineHeight: 1.1 }}>{slug ? 'Edit Story' : 'New Story'}</h1>
+          <p style={{ color: 'var(--stone-500)', marginTop: '0.5rem', fontSize: '0.95rem' }}>{slug ? 'Update your masterpiece.' : 'Write something worth reading.'}</p>
         </header>
 
         {error && (
@@ -206,7 +224,7 @@ export function CreatePostPage() {
             </button>
             <button id="btn-publish-post" type="submit" disabled={loading}
               style={{ padding: '0.8rem 2rem', borderRadius: '12px', border: 'none', background: loading ? 'rgba(28,25,23,0.5)' : 'var(--ink-900)', color: '#fff', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '0.9rem', fontWeight: 600, transition: 'all 0.2s' }}>
-              {loading ? 'Publishing…' : 'Publish story'}
+              {loading ? (slug ? 'Updating…' : 'Publishing…') : (slug ? 'Update story' : 'Publish story')}
             </button>
           </div>
         </form>

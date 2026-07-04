@@ -48,7 +48,7 @@ export interface UpdateBlogDto {
 }
 
 export class BlogService {
-  static async getBlogs(params: { query?: string; page?: number; limit?: number }): Promise<BlogListResponse> {
+  static async getBlogs(params: { query?: string; page?: number; limit?: number; author?: string }): Promise<BlogListResponse> {
     try {
       const res = await api.get('/blogs', { params })
       return res.data.data as BlogListResponse

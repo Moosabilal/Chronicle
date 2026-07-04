@@ -20,11 +20,12 @@ export class BlogController {
   });
 
   getBlogs = catchAsync(async (req: Request, res: Response) => {
-    const query = String(req.query.query || '');
-    const page  = parseInt(String(req.query.page  || '1'),  10);
-    const limit = parseInt(String(req.query.limit || '10'), 10);
+    const query  = String(req.query.query || '');
+    const page   = parseInt(String(req.query.page  || '1'),  10);
+    const limit  = parseInt(String(req.query.limit || '10'), 10);
+    const author = req.query.author ? String(req.query.author) : undefined;
 
-    const result = await this.blogService.getBlogs(query, page, limit);
+    const result = await this.blogService.getBlogs(query, page, limit, author);
     res.status(200).json({ success: true, data: result });
   });
 

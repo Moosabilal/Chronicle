@@ -47,4 +47,13 @@ export class AuthService {
       throw new Error(error.response?.data?.message ?? 'Failed to reset password.')
     }
   }
+
+  static async updateProfile(data: { name?: string; avatar?: string }): Promise<AuthUser> {
+    try {
+      const res = await api.put('/auth/profile', data)
+      return res.data.data as AuthUser
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message ?? 'Failed to update profile.')
+    }
+  }
 }

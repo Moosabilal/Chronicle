@@ -14,8 +14,9 @@ export class BlogRepository extends BaseRepository<IBlog> implements IBlogReposi
     return await this.model.findOne({ slug }).populate('author', 'name avatar').populate('comments').exec();
   }
 
-  async search(query: string, page: number, limit: number): Promise<{ blogs: IBlog[]; total: number }> {
-    const filter = query ? { title: { $regex: query, $options: 'i' } } : {};
+  async search(query: string, page: number, limit: number, authorId?: string): Promise<{ blogs: IBlog[]; total: number }> {
+    const filter: any = query ? { title: { $regex: query, $options: 'i' } } : {};
+    if (authorId) filter.author = authorId;
     const skip = (page - 1) * limit;
 
     const [blogs, total] = await Promise.all([

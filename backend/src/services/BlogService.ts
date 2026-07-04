@@ -28,8 +28,8 @@ export class BlogService implements IBlogService {
     return await this.blogRepository.create({ ...data, slug, author: userId as any });
   }
 
-  async getBlogs(query = '', page = 1, limit = 10) {
-    return await this.blogRepository.search(query, page, limit);
+  async getBlogs(query = '', page = 1, limit = 10, authorId?: string) {
+    return await this.blogRepository.search(query, page, limit, authorId);
   }
 
   async getBlogBySlug(slug: string): Promise<IBlog> {

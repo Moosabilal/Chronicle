@@ -5,6 +5,7 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { CreatePostPage } from './pages/CreatePostPage'
 import { ViewPostPage } from './pages/ViewPostPage'
+import { ProfilePage } from './pages/ProfilePage'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
 
@@ -16,6 +17,8 @@ function App() {
           <Route index element={<FeedPage />} />
           <Route path="/post/:slug" element={<ViewPostPage />} />
           <Route path="/write" element={<CreatePostPage />} />
+          <Route path="/edit/:slug" element={<CreatePostPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />

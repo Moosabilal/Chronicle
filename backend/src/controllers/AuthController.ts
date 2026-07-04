@@ -30,4 +30,9 @@ export class AuthController {
     await this.authService.resetPassword(req.params.token as string, req.body.password);
     res.status(200).json({ success: true, message: 'Password reset successful' });
   });
+
+  updateProfile = catchAsync(async (req: Request, res: Response) => {
+    const updatedUser = await this.authService.updateProfile(req.user!.id, req.body);
+    res.status(200).json({ success: true, data: updatedUser });
+  });
 }

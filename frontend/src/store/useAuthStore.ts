@@ -13,6 +13,7 @@ interface AuthState {
   isAuthenticated: boolean
   login: (user: AuthUser, token: string) => void
   logout: () => void
+  updateUser: (user: AuthUser) => void
 }
 
 /* ── Rehydrate from localStorage on first load ──────────────────────────── */
@@ -34,5 +35,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.removeItem('chronicle_token')
     localStorage.removeItem('chronicle_user')
     set({ user: null, token: null, isAuthenticated: false })
+  },
+
+  updateUser: (user) => {
+    localStorage.setItem('chronicle_user', JSON.stringify(user))
+    set({ user })
   },
 }))
