@@ -107,6 +107,7 @@ h1, h2, h3, h4 {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
 }
 
 /* ===========================
