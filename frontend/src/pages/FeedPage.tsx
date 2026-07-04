@@ -137,7 +137,7 @@ export function FeedPage() {
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem 6rem' }}>
       <header ref={heroRef} style={{ textAlign: 'center', marginBottom: '3.5rem', opacity: 0 }}>
         <h1 style={{
-          fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 8vw, 4rem)',
           fontWeight: 700, color: 'var(--ink-900)', letterSpacing: '-0.04em', lineHeight: 1.1, marginBottom: '1rem',
         }}>
           Stories worth&nbsp;<span style={{ fontStyle: 'italic', color: 'var(--stone-500)' }}>reading.</span>

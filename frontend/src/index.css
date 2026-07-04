@@ -107,5 +107,26 @@ h1, h2, h3, h4 {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+}
+
+/* ===========================
+   Responsive Nav & Breakpoints
+   =========================== */
+.desktop-nav {
+  display: none !important;
+}
+.mobile-nav-toggle {
+  display: block !important;
+}
+.mobile-menu {
+  display: flex !important;
+}
+
+@media (min-width: 768px) {
+  .desktop-nav {
+    display: flex !important;
+  }
+  .mobile-nav-toggle, .mobile-menu {
+    display: none !important;
   }
 }

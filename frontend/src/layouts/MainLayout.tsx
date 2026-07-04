@@ -75,8 +75,8 @@ function Navbar() {
         
         <ul
           role="list"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', listStyle: 'none' }}
-          className="hidden md:flex"
+          style={{ alignItems: 'center', gap: '0.25rem', listStyle: 'none' }}
+          className="desktop-nav"
         >
           {isAuthenticated ? (
             /* ── Authenticated nav ── */
@@ -154,7 +154,7 @@ function Navbar() {
             background: 'none', border: 'none', cursor: 'pointer',
             color: 'var(--stone-700)', padding: '0.5rem', borderRadius: '6px',
           }}
-          className="md:hidden"
+          className="mobile-nav-toggle"
         >
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -165,10 +165,10 @@ function Navbar() {
         <div
           role="menu"
           style={{
-            padding: '0.75rem 1.5rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '0.25rem',
+            padding: '0.75rem 1.5rem 1.25rem', flexDirection: 'column', gap: '0.25rem',
             borderTop: '1px solid rgba(255,255,255,0.25)',
           }}
-          className="md:hidden"
+          className="mobile-menu"
         >
           <MobileNavItem to="/" label="Read" />
           {isAuthenticated ? (
