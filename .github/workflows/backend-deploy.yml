@@ -1,0 +1,45 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-deploy.yml'
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Or your target node version
+
+      - name: Install Dependencies (CI)
+        working-directory: ./backend
+        run: npm ci || npm install
+
+      - name: Build Backend (CI)
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Deploy to AWS EC2 (CD)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/Chronicle
+            git pull origin main
+            cd backend
+            npm install
+            npm run build
+            pm2 restart chronicle-backend || pm2 start dist/server.js --name "chronicle-backend"
