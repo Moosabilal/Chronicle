@@ -30,7 +30,14 @@ export function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Client-side validation
+    if (form.name.trim().length < 2) { setError('Name must be at least 2 characters.'); return }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.email)) { setError('Please enter a valid email address.'); return }
+    if (form.password.length < 6) { setError('Password must be at least 6 characters.'); return }
     if (form.password !== form.confirmPassword) { setError('Passwords do not match.'); return }
+    
     setLoading(true); setError('')
     try {
       const { user, token } = await AuthService.register({ name: form.name, email: form.email, password: form.password })

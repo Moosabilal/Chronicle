@@ -29,6 +29,12 @@ export function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Client-side validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.email)) { setError('Please enter a valid email address.'); return }
+    if (!form.password) { setError('Password is required.'); return }
+
     setLoading(true); setError('')
     try {
       const { user, token } = await AuthService.login(form)

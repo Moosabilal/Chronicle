@@ -8,6 +8,7 @@ import { useAuthStore } from '../store/useAuthStore'
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -23,12 +24,18 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutConfirm(true)
+  }
+
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false)
     logout()
     navigate('/')
   }
 
   return (
+    <>
     <header
       role="banner"
       style={{
@@ -76,14 +83,18 @@ function Navbar() {
             <>
               <NavItem to="/" label="Read" />
               <NavItem to="/write" label="Write" icon={<PenSquare size={14} strokeWidth={2} />} />
-              <NavItem to="/profile" label="Profile" icon={<User size={14} strokeWidth={2} />} />
               <li>
-                <div
+                <Link
+                  to="/profile"
                   style={{
                     display: 'flex', alignItems: 'center', gap: '0.5rem',
                     padding: '0.35rem 0.75rem', borderRadius: '8px',
                     background: 'rgba(28,25,23,0.06)', border: '1px solid rgba(28,25,23,0.1)',
+                    textDecoration: 'none', transition: 'all 0.2s',
                   }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(28,25,23,0.1)'; e.currentTarget.style.borderColor = 'rgba(28,25,23,0.15)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(28,25,23,0.06)'; e.currentTarget.style.borderColor = 'rgba(28,25,23,0.1)' }}
+                  aria-label="Your Profile"
                 >
                   <div style={{
                     width: '26px', height: '26px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0,
@@ -100,12 +111,12 @@ function Navbar() {
                   <span style={{ fontSize: '0.88rem', fontWeight: 500, color: 'var(--ink-900)', maxWidth: '120px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {user?.name}
                   </span>
-                </div>
+                </Link>
               </li>
               <li>
                 <button
                   id="btn-logout"
-                  onClick={handleLogout}
+                  onClick={handleLogoutClick}
                   aria-label="Sign out"
                   title="Sign out"
                   style={{
@@ -166,7 +177,7 @@ function Navbar() {
               <MobileNavItem to="/profile" label="Profile" />
               <button
                 id="btn-logout-mobile"
-                onClick={handleLogout}
+                onClick={handleLogoutClick}
                 style={{
                   padding: '0.65rem 0.75rem', borderRadius: '8px', fontSize: '1rem', fontWeight: 500,
                   color: '#c0392b', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
@@ -184,6 +195,19 @@ function Navbar() {
         </div>
       )}
     </header>
+      {showLogoutConfirm && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(28,25,23,0.4)', backdropFilter: 'blur(4px)' }}>
+          <div style={{ background: 'rgba(255,255,255,0.95)', padding: '2rem', borderRadius: '16px', maxWidth: '360px', width: '90%', boxShadow: '0 20px 40px rgba(28,25,23,0.15)', border: '1px solid rgba(255,255,255,0.5)' }}>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--ink-900)' }}>Sign out</h3>
+            <p style={{ color: 'var(--stone-500)', fontSize: '0.9rem', marginBottom: '1.75rem', lineHeight: 1.5 }}>Are you sure you want to sign out of your account?</p>
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+              <button onClick={() => setShowLogoutConfirm(false)} style={{ padding: '0.6rem 1.2rem', borderRadius: '10px', border: '1px solid rgba(92,85,80,0.2)', background: 'transparent', color: 'var(--stone-700)', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}>Cancel</button>
+              <button onClick={confirmLogout} style={{ padding: '0.6rem 1.2rem', borderRadius: '10px', border: 'none', background: '#c0392b', color: '#fff', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}>Sign out</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

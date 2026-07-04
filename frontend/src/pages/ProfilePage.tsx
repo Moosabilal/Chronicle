@@ -65,6 +65,12 @@ export function ProfilePage() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    if (file.size > 10 * 1024 * 1024) {
+      setProfileError('Profile picture must be less than 10MB.')
+      return
+    }
+
     setAvatarFile(file)
     const reader = new FileReader()
     reader.onload = (ev) => setAvatarPreview(ev.target?.result as string)
@@ -73,6 +79,12 @@ export function ProfilePage() {
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (name.trim().length < 2) {
+      setProfileError('Name must be at least 2 characters.')
+      return
+    }
+
     setProfileLoading(true); setProfileError(''); setProfileSuccess('')
     try {
       let finalAvatarUrl = user?.avatar

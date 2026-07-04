@@ -113,7 +113,7 @@ export function FeedPage() {
   const limit   = 9
   const heroRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => { const t = setTimeout(() => setDQ(query), 400); return () => clearTimeout(t) }, [query])
+  useEffect(() => { const t = setTimeout(() => setDQ(query), 500); return () => clearTimeout(t) }, [query])
   useEffect(() => { setPage(1) }, [debouncedQuery])
 
   useEffect(() => {

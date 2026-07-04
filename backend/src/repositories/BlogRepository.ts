@@ -11,11 +11,16 @@ export class BlogRepository extends BaseRepository<IBlog> implements IBlogReposi
   }
 
   async findBySlug(slug: string): Promise<IBlog | null> {
-    return await this.model.findOne({ slug }).populate('author', 'name avatar').populate('comments').exec();
+    return await this.model.findOne({ slug }).populate('author', 'name avatar').populate({ path: 'comments', populate: { path: 'author', select: 'name avatar' } }).exec();
   }
 
   async search(query: string, page: number, limit: number, authorId?: string): Promise<{ blogs: IBlog[]; total: number }> {
-    const filter: any = query ? { title: { $regex: query, $options: 'i' } } : {};
+    const filter: any = query ? { 
+      $or: [
+        { title: { $regex: query, $options: 'i' } },
+        { excerpt: { $regex: query, $options: 'i' } }
+      ]
+    } : {};
     if (authorId) filter.author = authorId;
     const skip = (page - 1) * limit;
 

@@ -28,7 +28,7 @@ export abstract class BaseRepository<T extends Document> implements IBaseReposit
   }
 
   async update(id: string, item: any): Promise<T | null> {
-    return await this.model.findByIdAndUpdate(id, item, { new: true, runValidators: true }).exec();
+    return await this.model.findByIdAndUpdate(id, item, { returnDocument: 'after', runValidators: true }).exec();
   }
 
   async delete(id: string): Promise<boolean> {

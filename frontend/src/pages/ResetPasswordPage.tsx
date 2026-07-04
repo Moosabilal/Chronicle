@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Lock, AlertCircle } from 'lucide-react'
+import { Lock, AlertCircle, CheckCircle2 } from 'lucide-react'
 import gsap from 'gsap'
 import { AuthService } from '../services/AuthService'
 import { PasswordInput } from './LoginPage'
@@ -14,6 +14,7 @@ export function ResetPasswordPage() {
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -23,15 +24,21 @@ export function ResetPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
-      setError('Passwords do not match')
+    
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.')
       return
     }
-    setLoading(true); setError('')
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.')
+      return
+    }
+    
+    setLoading(true); setError(''); setSuccess('')
     try {
       await AuthService.resetPassword(token as string, password)
-      alert('Password has been reset successfully. Please log in.')
-      navigate('/login')
+      setSuccess('Password reset successfully. Redirecting...')
+      setTimeout(() => navigate('/login'), 2000)
     } catch (err: any) {
       setError(err.message)
     } finally {
@@ -51,6 +58,12 @@ export function ResetPasswordPage() {
         {error && (
           <div role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderRadius: '10px', background: 'rgba(192,57,43,0.08)', border: '1px solid rgba(192,57,43,0.2)', color: '#c0392b', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
             <AlertCircle size={15} />{error}
+          </div>
+        )}
+
+        {success && (
+          <div role="status" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderRadius: '10px', background: 'rgba(39,174,96,0.08)', border: '1px solid rgba(39,174,96,0.2)', color: '#27ae60', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
+            <CheckCircle2 size={15} />{success}
           </div>
         )}
 

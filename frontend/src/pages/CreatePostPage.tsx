@@ -50,6 +50,11 @@ export function CreatePostPage() {
     const file = e.target.files?.[0]
     if (!file) return
 
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Image must be less than 10MB.')
+      return
+    }
+
     setImageFile(file)
     setCoverImage('')
 
@@ -84,7 +89,9 @@ export function CreatePostPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.title.trim() || !form.content.trim()) { setError('Title and content are required.'); return }
+    
+    if (form.title.trim().length < 3) { setError('Title must be at least 3 characters.'); return }
+    if (form.content.trim().length < 10) { setError('Content is too short (min 10 characters).'); return }
     if (imageFile && !coverImage) { setError('Please upload the selected image first before publishing.'); return }
 
     setLoading(true); setError('')
@@ -184,7 +191,7 @@ export function CreatePostPage() {
                   {!coverImage && (
                     <button id="btn-upload-image" type="button" onClick={handleUploadImage} disabled={uploadingImage}
                       style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.25rem', borderRadius: '10px', border: 'none', background: 'rgba(255,255,255,0.92)', color: 'var(--ink-900)', fontWeight: 600, fontSize: '0.85rem', cursor: uploadingImage ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}>
-                      <Upload size={14} />{uploadingImage ? 'Uploading…' : 'Upload to Cloudinary'}
+                      <Upload size={14} />{uploadingImage ? 'Uploading…' : 'Upload'}
                     </button>
                   )}
                   {coverImage && (
@@ -205,7 +212,7 @@ export function CreatePostPage() {
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(92,85,80,0.25)'; e.currentTarget.style.background = 'rgba(255,255,255,0.4)' }}>
                 <ImageIcon size={28} strokeWidth={1.5} />
                 <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Click to browse image</span>
-                <span style={{ fontSize: '0.78rem', opacity: 0.7 }}>JPG, PNG, WebP — max 5 MB</span>
+                <span style={{ fontSize: '0.78rem', opacity: 0.7 }}>JPG, PNG, WebP — max 10 MB</span>
               </button>
             )}
           </div>
