@@ -56,7 +56,7 @@ function Navbar() {
           height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}
       >
-        {/* Brand */}
+        
         <Link
           to="/"
           id="nav-brand"
@@ -72,7 +72,7 @@ function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
+        
         <ul
           role="list"
           style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', listStyle: 'none' }}
@@ -144,7 +144,7 @@ function Navbar() {
           )}
         </ul>
 
-        {/* Mobile hamburger */}
+        
         <button
           id="nav-menu-toggle"
           aria-label="Toggle mobile menu"
@@ -160,7 +160,7 @@ function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile drawer */}
+      
       {menuOpen && (
         <div
           role="menu"

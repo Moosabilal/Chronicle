@@ -117,7 +117,7 @@ export function ViewPostPage() {
         {blog.content}
       </div>
 
-      {/* Comments */}
+      
       <section aria-label="Comments" style={{ marginTop: '5rem', paddingTop: '3rem', borderTop: '1px solid rgba(92,85,80,0.12)' }}>
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--ink-900)', letterSpacing: '-0.02em', marginBottom: '2rem' }}>
           {blog.comments?.length || 0} {blog.comments?.length === 1 ? 'Comment' : 'Comments'}

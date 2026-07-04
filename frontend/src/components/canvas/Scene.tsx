@@ -25,10 +25,10 @@ export function Scene() {
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />
 
-        {/* Soft cream-tinted ambient fill */}
+        
         <ambientLight intensity={1.4} color="#FDF8F0" />
 
-        {/* Warm key light from upper-right */}
+        
         <directionalLight
           position={[6, 8, 4]}
           intensity={1.8}
@@ -38,18 +38,18 @@ export function Scene() {
           shadow-mapSize-height={1024}
         />
 
-        {/* Cool fill light from lower-left for marble depth */}
+        
         <directionalLight
           position={[-5, -3, 2]}
           intensity={0.5}
           color="#E8ECF4"
         />
 
-        {/* Point light for specular sheen on marbles */}
+        
         <pointLight position={[0, 5, 5]} intensity={0.6} color="#FFF5E6" />
 
         <Suspense fallback={null}>
-          {/* Soft studio environment for reflections */}
+          
           <Environment preset="dawn" />
           <FloatingMarbles />
         </Suspense>

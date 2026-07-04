@@ -155,32 +155,32 @@ export function CreatePostPage() {
 
         <form id="create-post-form" onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.45)', borderRadius: '20px', padding: '2.5rem', boxShadow: '0 8px 32px rgba(92,85,80,0.08)' }}>
           
-          {/* Title */}
+          
           <div>
             <label style={labelStyle}><Type size={13} />Title</label>
             <input id="post-title" name="title" type="text" placeholder="An unforgettable headline…" value={form.title} onChange={handleChange} required
               style={{ ...fieldStyle, fontSize: '1.1rem', fontWeight: 500 }} {...focusStyle} />
           </div>
 
-          {/* Excerpt */}
+          
           <div>
             <label style={labelStyle}><FileText size={13} />Excerpt</label>
             <input id="post-excerpt" name="excerpt" type="text" placeholder="A brief, compelling summary…" value={form.excerpt} onChange={handleChange}
               style={fieldStyle} {...focusStyle} />
           </div>
 
-          {/* Content */}
+          
           <div>
             <label style={labelStyle}><AlignLeft size={13} />Content</label>
             <textarea id="post-content" name="content" placeholder="Tell your story…" value={form.content} onChange={handleChange} required rows={16}
               style={{ ...fieldStyle, resize: 'vertical', lineHeight: 1.8, minHeight: '320px' }} {...focusStyle} />
           </div>
 
-          {/* Cover Image — file picker + Cloudinary upload */}
+          
           <div>
             <label style={labelStyle}><ImageIcon size={13} />Cover Image</label>
             
-            {/* Hidden file input */}
+            
             <input ref={fileInputRef} id="post-image-file" type="file" accept="image/*" onChange={handleFileSelect}
               style={{ display: 'none' }} aria-label="Select cover image file" />
 
@@ -217,7 +217,7 @@ export function CreatePostPage() {
             )}
           </div>
 
-          {/* Tags */}
+          
           <div>
             <label style={labelStyle}><Tag size={13} />Tags (comma-separated)</label>
             <input id="post-tags" name="tags" type="text" placeholder="tech, design, culture" value={form.tags} onChange={handleChange}

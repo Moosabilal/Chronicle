@@ -228,7 +228,7 @@ export function ProfilePage() {
                   </div>
                 ))}
                 
-                {/* Pagination Controls */}
+                
                 {total > limit && (
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '2rem' }}>
                     <button disabled={page === 1} onClick={() => setPage(p => p - 1)} style={{ padding: '0.5rem 1rem', borderRadius: '8px', border: '1px solid rgba(92,85,80,0.2)', background: 'var(--cream-100)', cursor: page === 1 ? 'not-allowed' : 'pointer', opacity: page === 1 ? 0.5 : 1 }}>Previous</button>
@@ -242,7 +242,7 @@ export function ProfilePage() {
         )}
       </div>
       
-      {/* Global CSS for spin animation */}
+      
       <style>{`
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .spin { animation: spin 1s linear infinite; }
