@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { PenSquare, BookOpen, LogIn, LogOut, Menu, X, UserPlus, User } from 'lucide-react'
+import { PenSquare, BookOpen, LogIn, LogOut, Menu, X, UserPlus } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Scene } from '../components/canvas/Scene'
 import { useAuthStore } from '../store/useAuthStore'
